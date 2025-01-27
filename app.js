@@ -6,8 +6,12 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const connectDB = require("./database/connection")
 
 const app = express();
+
+// connect to MongoDB:
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
