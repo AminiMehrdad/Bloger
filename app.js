@@ -3,9 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const session = require('express-session');
+const routs = require('./routes/routs');
 const connectDB = require("./database/connection")
 
 const app = express();
@@ -23,8 +22,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(
+  session({
+    secret: process.env.SESSION,
+    resave: false, // Don't save the session if it wasn't modified
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 30 * 60 * 1000
+    }
+  })
+);
+
+app.use('/', routs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
