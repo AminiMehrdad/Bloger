@@ -6,7 +6,7 @@
   user-select: none;
 }
 .bg-img{
-  background: url('bg.jpg');
+  background: url('/images/bg.jpg');
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -155,4 +155,9 @@ i span{
 }
 .signup a:hover{
   text-decoration: underline;
+}
+
+#Gender {
+  width: 100%;
+  border: 0;
 }

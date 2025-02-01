@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Users = require("../../database/models/Users");
+const Users = require("../../database/models/users");
+const valdate_input = require("../../utils/validation/Joi_validator");
 
 router.get("/login", (req, res)=> {
   res.render("Login_page");
 })
 
 router.get("/regester", (req, res)=> {
-  res.render("Rejester_page");
+  // const massage = 
+  res.render("regester_page");
 })
 
 router.post("/dashbord", (req, res) => {
@@ -15,10 +17,13 @@ router.post("/dashbord", (req, res) => {
   res.render("Dashbord_page");
 })
 
-router.post("/create", async (req, res) => {
+router.post("/create", valdate_input, async (req, res) => {
+  
   try {
+    return res.json({msg: "yes"});
+
     if(!req.body.FerstName || !req.body.LastName || !req.body.UserName || !req.body.PassWord || !req.body.PhoneNumber) {
-      return res.redirect("/login/?erorr=fill_the_imputs");
+      return res.redirect("/regester");
     };
   
     const User_username = await Users.findOne({UserName: req.body.UserName.trim()});
