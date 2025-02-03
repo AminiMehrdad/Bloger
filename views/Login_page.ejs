@@ -11,14 +11,15 @@
     <div class="bg-img">
         <div class="content">
            <header>Login Form</header>
-           <form action="/auth/finduser">
-              <div class="field">
+           <h4 style="color: rgb(197, 8, 8);"><%= msg %></h4>
+           <form action="/auth/finduser" method="post">
+              <div class="field space">
                  <span class="fa fa-user"></span>
-                 <input type="text" required placeholder="Username or Phone">
+                 <input type="text" required placeholder="Username or Phone" name="UserName">
               </div>
               <div class="field space">
                  <span class="fa fa-lock"></span>
-                 <input type="password" class="pass-key" required placeholder="Password">
+                 <input type="password" class="pass-key" required placeholder="Password", name="PassWord">
                  <span class="show">SHOW</span>
               </div>
               <div class="pass">

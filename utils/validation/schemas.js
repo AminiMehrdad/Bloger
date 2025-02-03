@@ -1,64 +1,103 @@
 const Joi = require("joi");
-const Validate_User = require("./data_base_check")
-const validator = require("validator");
 
-const UserSchema = Joi.object({
-    FerstName: Joi.string().min(3).max(50).required()
-    .messages({
-        "Min Length" : "Name must be at least 3 characters long",
-        "Max Length" : "Name cannot exceed 50 characters",
-        "any.required" : "Name is required"
-    }),
-    
-    LastName: Joi.string().min(3).max(50).required()
-    .messages({
-        "Min Length" : "LastName must be at least 3 characters long",
-        "Max Length" : "LastName cannot exceed 50 characters",
-        "any.required" : "LastName is required"
-    }),
-    
-    UserName: Joi.string().min(3).max(50).required()
-    .external(async (value, helpers) => {
-        const isUnique = await Validate_User(value);
-        if(!isUnique) {
-            return helpers.error("any.invalid", {value})
-        }
-        return value
-    }, 'Unique username validation')
-    .messages({
-        "string.min" : "UserName must be at least 3 characters long",
-        "string.max" : "UserName cannot exceed 50 characters",
-        "any.required" : "Usernmae is required",
-        "any.invalid" : `UserName is not invalid`
-    }),
+const RegesterSchema = Joi.object({
+    FerstName: Joi.string()
+        .trim()
+        .empty()
+        .min(3)
+        .max(50)
+        .required()
+        .messages({
+            'string.base': `FerstName should be a type of 'text'`,
+            "string.min": "Name must be at least 3 characters long",
+            "string.max": "Name cannot exceed 50 characters",
+            "any.required": "Name is required"
+        }),
 
-    PassWord: Joi.string().min(4).max(20).required().pattern(new RegExp('^[a-zA-Z0-9]{4,20}$'))
-    .messages({
-        "string.min" : "PassWord must be at least 4 characters long",
-        "string.max" : "PassWord cannot exceed 20 characters",
-        "any.required" : "PassWord is required",
-        'string.pattern.base': 'PassWord must contain only letters, numbers, and underscores',
-    }),
-    
-    PhoneNumber: Joi.string().required().external(async (value, helpers) => {
-        const isTherPhoneNumber = await Validate_User(value);
-        if(!isTherPhoneNumber) {
-            return helpers.error("any.invalid", {value})
-        }
+    LastName: Joi.string()
+        .trim()
+        .empty()
+        .min(3)
+        .max(50)
+        .required()
+        .messages({
+            'string.base': `LastName should be a type of 'text'`,
+            "string.min": "LastName must be at least 3 characters long",
+            "string.mxn": "LastName cannot exceed 50 characters",
+            "any.required": "LastName is required"
+        }),
 
-        const validator_phone = validator.isMobilePhone(value, "fa-IR");
-        if(!validator_phone) {
-            return helpers.error("any.invalid", {value});
-        }
+    UserName: Joi.string()
+        .trim()
+        .empty()
+        .min(3)
+        .max(50)
+        .required()
+        .messages({
+            'string.base': `UserName should be a type of 'text'`,
+            "string.min": "UserName must be at least 3 characters long",
+            "string.max": "UserName cannot exceed 50 characters",
+            "any.required": "Usernmae is required",
+            "any.invalid": `UserName is not invalid`
+        }),
 
-        return value
-    },'Unique username validation')
-    .messages({
-        "any.required" : "PhoneNumber is required",
-        "any.invalid" : `This phone number is not valid`
-    })
-    
+    PassWord: Joi.string()
+        .trim()
+        .empty()
+        .min(4)
+        .max(20)
+        .required()
+        .pattern(new RegExp('^[a-zA-Z0-9]{4,20}$'))
+        .messages({
+            'string.base': `PasWord should be a type of 'text'`,
+            "string.min": "PassWord must be at least 4 characters long",
+            "string.max": "PassWord cannot exceed 20 characters",
+            "any.required": "PassWord is required",
+            'string.pattern.base': 'PassWord must contain only letters, numbers',
+        }),
+
+    PhoneNumber: Joi.string()
+        .trim()
+        .empty()
+        .required()
+        .messages({
+            'string.base': `PhoneNumber should be a type of 'text'`,
+            "any.required": "PhoneNumber is required",
+            "any.invalid": `This phone number is not valid`
+        }),
+    Gender: Joi.string()
+
 });
 
-module.exports = UserSchema;
+const LoginSchema = Joi.object({
+    UserName: Joi.string()
+        .trim()
+        .empty()
+        .min(3)
+        .max(50)
+        .required()
+        .messages({
+            'string.base': `UserName should be a type of 'text'`,
+            "string.min": "UserName must be at least 3 characters long",
+            "string.max": "UserName cannot exceed 50 characters",
+            "any.required": "Usernmae is required"
+        }),
+
+    PassWord: Joi.string()
+        .trim()
+        .empty()
+        .min(4)
+        .max(20)
+        .required()
+        .pattern(new RegExp('^[a-zA-Z0-9]{4,20}$'))
+        .messages({
+            'string.base': `PasWord should be a type of 'text'`,
+            "string.min": "PassWord must be at least 4 characters long",
+            "string.max": "PassWord cannot exceed 20 characters",
+            "any.required": "PassWord is required",
+            'string.pattern.base': 'PassWord must contain only letters, numbers',
+        }),
+})
+
+module.exports = {RegesterSchema, LoginSchema};
 

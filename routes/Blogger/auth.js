@@ -1,67 +1,61 @@
 const express = require('express');
 const router = express.Router();
 const Users = require("../../database/models/users");
-const valdate_input = require("../../utils/validation/Joi_validator");
+const { valdate_regester, valdate_login } = require("../../utils/validation/Joi_validator");
+const { isUsernameUnique, isPhoneNumberUnique } = require("../../utils/validation/data_base_check")
 
-router.get("/login", (req, res)=> {
-  res.render("Login_page");
+router.get("/login", (req, res) => {
+  const msg = req.query.msg
+  res.render("Login_page", { msg });
 })
 
-router.get("/regester", (req, res)=> {
-  // const massage = 
-  res.render("regester_page");
+router.get("/regester", (req, res) => {
+  const msg = req.query.msg
+  res.render("regester_page", { msg });
 })
 
 router.post("/dashbord", (req, res) => {
-  const {UserName, password} = req.body;
+  const { UserName, password } = req.body;
   res.render("Dashbord_page");
 })
 
-router.post("/create", valdate_input, async (req, res) => {
-  
+router.post("/create", valdate_regester, async (req, res) => {
+
   try {
-    return res.json({msg: "yes"});
-
-    if(!req.body.FerstName || !req.body.LastName || !req.body.UserName || !req.body.PassWord || !req.body.PhoneNumber) {
-      return res.redirect("/regester");
-    };
-  
-    const User_username = await Users.findOne({UserName: req.body.UserName.trim()});
-    const User_phonenumber = await Users.findOne({PhoneNumber: req.body.PhoneNumber.trim()});
-  
-    if(User_username) {
-      return res.redirect("/login")
+    const isusername = await isUsernameUnique(req.body.UserName);
+    const isphonenumber = await isPhoneNumberUnique(req.body.PhoneNumber);
+    if (isusername.msg === "No User Find" && isphonenumber.msg === "No User Find") {
+      const NEW_USER = new Users(req.body);
+      await NEW_USER.save();
+      return res.status(201).redirect("/auth/login")
     }
-    if(User_phonenumber) {
-      return res.redirect("/login")
+    if (!isusername.msg || !isphonenumber.msg) {
+      return res.status(400).redirect(`/auth/regester/?msg="You regester befor with this user name or phone number!"`)
     }
+    res.status(400).redirect(`/auth/regester/?msg="${isphonenumber.msg}"`);
 
-    const NEW_USER = new Users(req.body);
-
-    await NEW_USER.save();
-    res.redirect("/login")
-    
   } catch (error) {
     console.error("internaral errorr => ", error);
+    throw error
   }
 })
 
-router.post("/finduser", async (req, res) => {
+router.post("/finduser", valdate_login, async (req, res) => {
   try {
-    if (!req.body.UserName || !req.body.PassWord) {
-      return res.render('login', {msg: 'Not Acceptable'})
-  };
-  const user = Users.findOne({UserName: req.body.UserName})
-  if (!user) {
-    return res.render('login', {msg: 'Wrong username or password'})
-}
-req.session.user = user;
 
-        res.redirect('/api/auth/dashboard')
+    const user = await isUsernameUnique(req.body.UserName);
+    
+    if (!user.msg && req.body.PassWord === user.PassWord){
+      req.session.user = user;
+      res.redirect('/auth/dashboard')
+    }
+    return res.redirect(`/auth/login/?msg=user name or password incorrect`)
+    
   } catch (error) {
     console.error("internaral errorr => ", error);
+    throw error
   }
- 
+
 
 })
 module.exports = router;
