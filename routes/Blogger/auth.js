@@ -52,8 +52,10 @@ router.post("/finduser", valdate_login, async (req, res) => {
   try {
 
     const user = await isUsernameUnique(req.body.UserName);
+
+    const isMathc = user.copearpassword(req.body.PassWord);
     
-    if (!user.msg && req.body.PassWord === user.PassWord){
+    if (!user.msg && isMathc){
       req.session.user = user;
       return res.redirect('/auth/dashbord')
     }

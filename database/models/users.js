@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt")
 
 const UserSchema = new mongoose.Schema({
     FerstName: {
@@ -58,5 +59,28 @@ const UserSchema = new mongoose.Schema({
     }
 
 });
+UserSchema.pre("save", async (next) => {
+    
+    if(!this.isModified("PassWord")) return next();
+
+    try{
+        const saltRounds = parseInt(prosses.env.SALT_ROUNDS, 10)
+
+        if (isNaN(saltRounds)) {
+            throw new Error('SALT_ROUNDS must be a valid number');
+          }
+
+          const salt = await bcrypt.genSalt(saltRounds);
+          const hashpassword = await bcrypt.hash(this.PassWord, salt);
+          this.PassWord = hashpassword
+
+    } catch(error){
+        next(error);
+    }
+})
+
+UserSchema.methods.copearpassword = async (password) => {
+    return await bcrypt.compare(password, this.PassWord)
+}
 
 module.exports = mongoose.model("User", UserSchema);
