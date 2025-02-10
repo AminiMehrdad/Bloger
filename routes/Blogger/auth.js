@@ -5,17 +5,25 @@ const { valdate_regester, valdate_login } = require("../../utils/validation/Joi_
 const { isUsernameUnique, isPhoneNumberUnique } = require("../../utils/validation/data_base_check")
 
 router.get("/login", (req, res) => {
+  if(req.session.user && req.cookies.user_sid) {
+     return res.redirect("/auth/dashbord")
+  }
   const msg = req.query.msg
   res.render("Login_page", { msg });
 })
 
 router.get("/regester", (req, res) => {
+  if(req.session.user && req.cookies.user_sid) {
+    return res.redirect("/auth/dashbord")
+ }
   const msg = req.query.msg
   res.render("regester_page", { msg });
 })
 
-router.post("/dashbord", (req, res) => {
-  const { UserName, password } = req.body;
+router.get("/dashbord", (req, res) => {
+  if(!req.session.user || !req.cookies.user_sid){
+    return res.redirect("/auth/login");
+  };
   res.render("Dashbord_page");
 })
 
@@ -47,7 +55,7 @@ router.post("/finduser", valdate_login, async (req, res) => {
     
     if (!user.msg && req.body.PassWord === user.PassWord){
       req.session.user = user;
-      res.redirect('/auth/dashboard')
+      return res.redirect('/auth/dashbord')
     }
     return res.redirect(`/auth/login/?msg=user name or password incorrect`)
     

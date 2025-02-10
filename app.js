@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   session({
+    key: "user_sid",
     secret: process.env.SESSION,
     resave: false, // Don't save the session if it wasn't modified
     saveUninitialized: false,
