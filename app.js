@@ -5,12 +5,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const routs = require('./routes/routs');
-const connectDB = require("./database/connection")
+const connectDB = require("./database/connection");
+const createAdmin = require("./utils/intiolization");
 
 const app = express();
 
 // connect to MongoDB:
 connectDB();
+createAdmin()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(
   session({
@@ -34,6 +37,13 @@ app.use(
     }
   })
 );
+
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+    res.clearCookie('user_sid')
+  };
+  next()
+})
 
 app.use('/', routs);
 

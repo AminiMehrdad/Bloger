@@ -59,12 +59,12 @@ const UserSchema = new mongoose.Schema({
     }
 
 });
-UserSchema.pre("save", async (next) => {
+UserSchema.pre("save", async function (next)  {
     
     if(!this.isModified("PassWord")) return next();
 
     try{
-        const saltRounds = parseInt(prosses.env.SALT_ROUNDS, 10)
+        const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
 
         if (isNaN(saltRounds)) {
             throw new Error('SALT_ROUNDS must be a valid number');
@@ -79,7 +79,7 @@ UserSchema.pre("save", async (next) => {
     }
 })
 
-UserSchema.methods.copearpassword = async (password) => {
+UserSchema.methods.copearpassword = async function (password) {
     return await bcrypt.compare(password, this.PassWord)
 }
 

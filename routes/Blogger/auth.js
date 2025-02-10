@@ -33,6 +33,7 @@ router.post("/create", valdate_regester, async (req, res) => {
     const isusername = await isUsernameUnique(req.body.UserName);
     const isphonenumber = await isPhoneNumberUnique(req.body.PhoneNumber);
     if (isusername.msg === "No User Find" && isphonenumber.msg === "No User Find") {
+      req.body.Rol = "bloger"
       const NEW_USER = new Users(req.body);
       await NEW_USER.save();
       return res.status(201).redirect("/auth/login")
