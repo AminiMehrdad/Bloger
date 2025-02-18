@@ -24,7 +24,9 @@ router.get("/dashbord", (req, res) => {
   if(!req.session.user || !req.cookies.user_sid){
     return res.redirect("/auth/login");
   };
-  res.render("Dashbord_page");
+  const {FerstName, LastName, UserName, PhoneNumber, Gender} = req.session.user;
+  console.log(Gender)
+  res.render("Dashbord_page", {FerstName, LastName, UserName, PhoneNumber, Gender});
 })
 
 router.post("/create", valdate_regester, async (req, res) => {
@@ -36,6 +38,10 @@ router.post("/create", valdate_regester, async (req, res) => {
       req.body.Rol = "bloger"
       const NEW_USER = new Users(req.body);
       await NEW_USER.save();
+      console.log(req.session);
+      if (req.session.user.Rol === "admin") {
+        return res.json({msg: "ok"})
+      }
       return res.status(201).redirect("/auth/login")
     }
     if (!isusername.msg || !isphonenumber.msg) {
@@ -58,6 +64,9 @@ router.post("/finduser", valdate_login, async (req, res) => {
     
     if (!user.msg && isMathc){
       req.session.user = user;
+      if(req.session.user.Rol === "admin"){
+        return res.redirect('/admin/')
+      }
       return res.redirect('/auth/dashbord')
     }
     return res.redirect(`/auth/login/?msg=user name or password incorrect`)

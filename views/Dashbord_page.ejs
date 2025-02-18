@@ -4,359 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashbord</title>
+    <link rel="stylesheet" href="https://use.typekit.net/your-kit-id.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/stylesheets/Dashbord.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <script src=
+        "https://cdn.plot.ly/plotly-latest.min.js">
+    </script>
 </head>
 <body>
-    <div class="app">
-        <header class="app-header">
-            <div class="app-header-logo">
-                <div class="logo">
-                    <span class="logo-icon">
-                        <img src="https://assets.codepen.io/285131/almeria-logo.svg" />
-                    </span>
-                    <h1 class="logo-title">
-                        <span>Almeria</span>
-                        <span>NeoBank</span>
-                    </h1>
+    <div class="sidenav">
+        <div class="gradiant-border top-page">
+           <div class="userinfo d-flex">
+            <div class="p-3">
+                <img src="/images/images.png" alt="user image" class="userimge">
+            </div>
+            <div class="py-3" style="display: flex;flex-direction: column; justify-content: center;">
+                <p style="font-size: 12px; color: rgb(49, 49, 49);">
+                    FerstName LastName
+                </p>
+                <p style="font-size: 12px;color: gray;">
+                    Rol
+                </p>
+            </div>
+                
+           </div>
+        </div>
+        <div class="parent-slid">
+            <div class="navbtu">
+                <div class="box" id="Dashbord"  onclick="dashbord()">
+                    <div class="d-flex">
+                        <div class="icon-div custom-orange">
+                            <i class="fas fa-tachometer-alt "></i> <!-- Dashboard icon -->
+                        </div>
+                        <p>Dashbord</p>
+                    </div>
                 </div>
             </div>
-            <div class="app-header-navigation">
-                <div class="tabs">
-                    <a href="#">
-                        Overview
-                    </a>
-                    <a href="#" class="active">
-                        Payments
-                    </a>
-                    <a href="#">
-                        Cards
-                    </a>
-                    <a href="#">
-                        Account
-                    </a>
-                    <a href="#">
-                        System
-                    </a>
-                    <a href="#">
-                        Business
-                    </a>
+            <div class="navbtu">
+                <div class="silds" id="Articles" onclick="articles()">
+                    <div class="d-flex">
+                        <div class="icon-div box">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <p>Users Articles</p>
+                    </div>
                 </div>
-            </div>
-            <div class="app-header-actions">
-                <button class="user-profile">
-                    <span>Matheo Peterson</span>
-                    <span>
-                        <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
-                    </span>
-                </button>
-                <div class="app-header-actions-buttons">
-                    <button class="icon-button large">
-                        <i class="ph-magnifying-glass"></i>
-                    </button>
-                    <button class="icon-button large">
-                        <i class="ph-bell"></i>
-                    </button>
+             </div>
+             <div class="navbtu">
+                 <div class="silds" id="Profile" onclick="profile()">
+                    <div class="d-flex">
+                        <div class="icon-div box">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <p>Profile</p>
+                    </div>
                 </div>
-            </div>
-            <div class="app-header-mobile">
-                <button class="icon-button large">
-                    <i class="ph-list"></i>
-                </button>
             </div>
     
-        </header>
-        <div class="app-body">
-            <div class="app-body-navigation">
-                <nav class="navigation">
-                    <a href="#">
-                        <i class="ph-browsers"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="#">
-                        <i class="ph-check-square"></i>
-                        <span>Scheduled</span>
-                    </a>
-                    <a href="#">
-                        <i class="ph-swap"></i>
-                        <span>Transfers</span>
-                    </a>
-                    <a href="#">
-                        <i class="ph-file-text"></i>
-                        <span>Templates</span>
-                    </a>
-                    <a href="#">
-                        <i class="ph-globe"></i>
-                        <span>SWIFT</span>
-                    </a>
-                    <a href="#">
-                        <i class="ph-clipboard-text"></i>
-                        <span>Exchange</span>
-                    </a>
-                </nav>
-                <footer class="footer">
-                    <h1>Almeria<small>©</small></h1>
-                    <div>
-                        Almeria ©<br />
-                        All Rights Reserved 2021
+            <div class="navbtu">
+                    <div class="silds" id="Logout" onclick="Log_out()">
+                        <div class="d-flex">
+                            <div class="icon-div box">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            
+                            <p>Logout</p>
+                        </div>
                     </div>
-                </footer>
+                </div>
+        </div>
+        
+    </div>
+      <!-- Dashbord -->
+    <div class="main" id="main-dashbord">
+        <div class="top-page px-4">
+            <div>
+                <h3>
+                    Dashbord
+                </h3>
             </div>
-            <div class="app-body-main-content">
-                <section class="service-section">
-                    <h2>Service</h2>
-                    <div class="service-section-header">
-                        <div class="search-field">
-                            <i class="ph-magnifying-glass"></i>
-                            <input type="text" placeholder="Account number">
+        </div>
+        <div class="parent">
+            <div class="child viwers">
+                <div class="status">
+                    <div class="box custom-orange insidebox">
+                        <div class="box-icons iconsinbox" >
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        <div class="dropdown-field">
-                            <select>
-                                <option>Home</option>
-                                <option>Work</option>
-                            </select>
-                            <i class="ph-caret-down"></i>
+                        <h2>
+                            <b>100</b>
+                        </h2>
+                        <p>
+                            <b>view</b>
+                        </p>
+
+
+                    </div>
+                </div>
+                <div class="status">
+                    <div class="box bg-dark insidebox">
+                        <div class="box-icons iconsinbox">
+                            <i class="fas fa-thumbs-up"></i>
                         </div>
-                        <button class="flat-button">
-                            Search
-                        </button>
+                        <h2>
+                            <b>70</b>
+                            
+                        </h2>
+                        <p>
+                            <b>Like</b>
+                        </p>
+
                     </div>
-                    <div class="mobile-only">
-                        <button class="flat-button">
-                            Toggle search
-                        </button>
-                    </div>
-                    <div class="tiles">
-                        <article class="tile">
-                            <div class="tile-header">
-                                <i class="ph-lightning-light"></i>
-                                <h3>
-                                    <span>Electricity</span>
-                                    <span>UrkEnergo LTD.</span>
-                                </h3>
-                            </div>
-                            <a href="#">
-                                <span>Go to service</span>
-                                <span class="icon-button">
-                                    <i class="ph-caret-right-bold"></i>
-                                </span>
-                            </a>
-                        </article>
-                        <article class="tile">
-                            <div class="tile-header">
-                                <i class="ph-fire-simple-light"></i>
-                                <h3>
-                                    <span>Heating Gas</span>
-                                    <span>Gazprom UA</span>
-                                </h3>
-                            </div>
-                            <a href="#">
-                                <span>Go to service</span>
-                                <span class="icon-button">
-                                    <i class="ph-caret-right-bold"></i>
-                                </span>
-                            </a>
-                        </article>
-                        <article class="tile">
-                            <div class="tile-header">
-                                <i class="ph-file-light"></i>
-                                <h3>
-                                    <span>Tax online</span>
-                                    <span>Kharkov 62 str.</span>
-                                </h3>
-                            </div>
-                            <a href="#">
-                                <span>Go to service</span>
-                                <span class="icon-button">
-                                    <i class="ph-caret-right-bold"></i>
-                                </span>
-                            </a>
-                        </article>
-                    </div>
-                    <div class="service-section-footer">
-                        <p>Services are paid according to the current state of the currency and tariff.</p>
-                    </div>
-                </section>
-                <section class="transfer-section">
-                    <div class="transfer-section-header">
-                        <h2>Latest transfers</h2>
-                        <div class="filter-options">
-                            <p>Filter selected: more than 100 $</p>
-                            <button class="icon-button">
-                                <i class="ph-funnel"></i>
-                            </button>
-                            <button class="icon-button">
-                                <i class="ph-plus"></i>
-                            </button>
+                </div>
+                <div class="status">
+                    <div class="box bg-dark insidebox">
+                        <div class="box-icons iconsinbox">
+                            <i class="fas fa-eye"></i>
                         </div>
+                        <h2>
+                            <b>20</b>
+                        </h2>
+                        <p>
+                            <b>No Reaction</b>
+                        </p>
+
                     </div>
-                    <div class="transfers">
-                        <div class="transfer">
-                            <div class="transfer-logo">
-                                <img src="https://assets.codepen.io/285131/apple.svg" />
-                            </div>
-                            <dl class="transfer-details">
-                                <div>
-                                    <dt>Apple Inc.</dt>
-                                    <dd>Apple ID Payment</dd>
-                                </div>
-                                <div>
-                                    <dt>4012</dt>
-                                    <dd>Last four digits</dd>
-                                </div>
-                                <div>
-                                    <dt>28 Oct. 21</dt>
-                                    <dd>Date payment</dd>
-                                </div>
-                            </dl>
-                            <div class="transfer-number">
-                                - $ 550
-                            </div>
+                </div>
+                <div class="status">
+                    <div class="box bg-dark insidebox">
+                        <div class="box-icons iconsinbox">
+                            <i class="fas fa-thumbs-down"></i>
                         </div>
-                        <div class="transfer">
-                            <div class="transfer-logo">
-                                <img src="https://assets.codepen.io/285131/pinterest.svg" />
-                            </div>
-                            <dl class="transfer-details">
-                                <div>
-                                    <dt>Pinterest</dt>
-                                    <dd>2 year subscription</dd>
-                                </div>
-                                <div>
-                                    <dt>5214</dt>
-                                    <dd>Last four digits</dd>
-                                </div>
-                                <div>
-                                    <dt>26 Oct. 21</dt>
-                                    <dd>Date payment</dd>
-                                </div>
-                            </dl>
-                            <div class="transfer-number">
-                                - $ 120
-                            </div>
-                        </div>
-                        <div class="transfer">
-                            <div class="transfer-logo">
-                                <img src="https://assets.codepen.io/285131/warner-bros.svg" />
-                            </div>
-                            <dl class="transfer-details">
-                                <div>
-                                    <dt>Warner Bros.</dt>
-                                    <dd>Cinema</dd>
-                                </div>
-                                <div>
-                                    <dt>2228</dt>
-                                    <dd>Last four digits</dd>
-                                </div>
-                                <div>
-                                    <dt>22 Oct. 21</dt>
-                                    <dd>Date payment</dd>
-                                </div>
-                            </dl>
-                            <div class="transfer-number">
-                                - $ 70
-                            </div>
-                        </div>
+                        <h2>
+                            <b>10</b>
+                        </h2>
+                        <p>
+                            <b>Dislike</b>
+                        </p>
                     </div>
-                </section>
+                </div>
+
             </div>
-            <div class="app-body-sidebar">
-                <section class="payment-section">
-                    <h2>New Payment</h2>
-                    <div class="payment-section-header">
-                        <p>Choose a card to transfer money</p>
-                        <div>
-                            <button class="card-button mastercard">
-                                <svg width="2001" height="1237" viewBox="0 0 2001 1237" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="a624784f2834e21c94a1c0c9a58bbbaa">
-                                        <path id="7869b07bea546aa59a5ee138adbcfd5a" d="M1270.57 1104.15H729.71V132.15H1270.58L1270.57 1104.15Z" fill="currentColor"></path>
-                                        <path id="b54e3ab4d7044a9f288082bc6b864ae6" d="M764 618.17C764 421 856.32 245.36 1000.08 132.17C891.261 46.3647 756.669 -0.204758 618.09 9.6031e-07C276.72 9.6031e-07 0 276.76 0 618.17C0 959.58 276.72 1236.34 618.09 1236.34C756.672 1236.55 891.268 1189.98 1000.09 1104.17C856.34 991 764 815.35 764 618.17Z" fill="currentColor"></path>
-                                        <path id="67f94b4d1b83252a6619ed6e0cc0a3a1" d="M2000.25 618.17C2000.25 959.58 1723.53 1236.34 1382.16 1236.34C1243.56 1236.54 1108.95 1189.97 1000.11 1104.17C1143.91 990.98 1236.23 815.35 1236.23 618.17C1236.23 420.99 1143.91 245.36 1000.11 132.17C1108.95 46.3673 1243.56 -0.201169 1382.15 -2.24915e-05C1723.52 -2.24915e-05 2000.24 276.76 2000.24 618.17" fill="currentColor"></path>
-                                    </g>
-                                </svg>
-                            </button>
-                            <button class="card-button visa active">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2500" viewBox="0 0 141.732 141.732">
-                                    <g fill="currentColor">
-                                        <path d="M62.935 89.571h-9.733l6.083-37.384h9.734zM45.014 52.187L35.735 77.9l-1.098-5.537.001.002-3.275-16.812s-.396-3.366-4.617-3.366h-15.34l-.18.633s4.691.976 10.181 4.273l8.456 32.479h10.141l15.485-37.385H45.014zM121.569 89.571h8.937l-7.792-37.385h-7.824c-3.613 0-4.493 2.786-4.493 2.786L95.881 89.571h10.146l2.029-5.553h12.373l1.14 5.553zm-10.71-13.224l5.114-13.99 2.877 13.99h-7.991zM96.642 61.177l1.389-8.028s-4.286-1.63-8.754-1.63c-4.83 0-16.3 2.111-16.3 12.376 0 9.658 13.462 9.778 13.462 14.851s-12.075 4.164-16.06.965l-1.447 8.394s4.346 2.111 10.986 2.111c6.642 0 16.662-3.439 16.662-12.799 0-9.72-13.583-10.625-13.583-14.851.001-4.227 9.48-3.684 13.645-1.389z" />
-                                    </g>
-                                    <path d="M34.638 72.364l-3.275-16.812s-.396-3.366-4.617-3.366h-15.34l-.18.633s7.373 1.528 14.445 7.253c6.762 5.472 8.967 12.292 8.967 12.292z" fill="currentColor" />
-                                    <path fill="none" d="M0 0h141.732v141.732H0z" />
-                                </svg>
-                            </button>
-                        </div>
+            <div class="child plot">
+                <div class="box" id="plot" style="overflow: hidden;" >
+                     <!-- <div style="width: 100%; height: 100%;"></div> -->
+                     <script>
+                        var trace1 = {
+                            x: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                            y: [20, 14, 23, 25, 22, 18, 15],
+                            type: 'scatter'
+                        };
+                        var layout = {
+                            width: 600,  // Set the width of the plot
+                            height: 400  // Set the height of the plot
+                        };
+                        var data = [trace1];
+                        Plotly.newPlot('plot', data, layout);
+                    </script>
+
+                </div>
+
+            </div>
+            <div class="child history">
+                <div class="box p-3" id="project-box">
+                    <div class="mb-3">
+                        <p>
+                            <b>Projects</b>
+                        </p>
+                        <p class="text-secondary">
+                            your projects details
+                        </p>
                     </div>
-                    <div class="payments">
-                        <div class="payment">
-                            <div class="card green">
-                                <span>01/22</span>
-                                <span>
-                                    •••• 4012
-                                </span>
-                            </div>
-                            <div class="payment-details">
-                                <h3>Internet</h3>
-                                <div>
-                                    <span>$ 2,110</span>
-                                    <button class="icon-button">
-                                        <i class="ph-caret-right-bold"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment">
-                            <div class="card olive">
-                                <span>12/23</span>
-                                <span>
-                                    •••• 2228
-                                </span>
-                            </div>
-                            <div class="payment-details">
-                                <h3>Universal</h3>
-                                <div>
-                                    <span>$ 5,621</span>
-                                    <button class="icon-button">
-                                        <i class="ph-caret-right-bold"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment">
-                            <div class="card gray">
-                                <span>03/22</span>
-                                <span>
-                                    •••• 5214
-                                </span>
-                            </div>
-                            <div class="payment-details">
-                                <h3>Gold</h3>
-                                <div>
-                                    <span>$ 3,473</span>
-                                    <button class="icon-button">
-                                        <i class="ph-caret-right-bold"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <table>
+                        <tr>
+                          <th>Name of Project</th>
+                          <th>Total view</th>
+                        <th>Like</th>
+                        <th>Dislike</th>
+                        <th>Precision</th>
+                        </tr>
+                        <tr>
+                          <td>AI in well logs</td>
+                          <td>15</td>
+                          <td>10</td>
+                          <td>3</td>
+                          <td> 
+                            <p id="progressText">
+
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar" id="progressBar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Lois</td>
+                          <td>Griffin</td>
+                          <td>$150</td>
+                        </tr>
+                        <tr>
+                          <td>Joe</td>
+                          <td>Swanson</td>
+                          <td>$300</td>
+                        </tr>
+                        <tr>
+                          <td>Cleveland</td>
+                          <td>Brown</td>
+                          <td>$250</td>
+                        </tr>
+                        <tr>
+                            <td>Cleveland</td>
+                            <td>Brown</td>
+                            <td>$250</td>
+                          </tr>
+                      </table>
+                    <div class="d-flex justify-content-center align-items-center w-100 mt-5" >
+                        <nav aria-label="next page">
+                            <ul class="pagination pagination-sm custom-pagination">
+                              <li class="page-item active" aria-current="page">
+                                <span class="page-link">1</span>
+                              </li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            </ul>
+                          </nav>
+
                     </div>
-                    <div class="faq">
-                        <p>Most frequently asked questions</p>
-                        <div>
-                            <label>Question</label>
-                            <input type="text" placeholder="Type here">
-                        </div>
-                    </div>
-                    <div class="payment-section-footer">
-                        <button class="save-button">
-                            Save
-                        </button>
-                        <button class="settings-button">
-                            <i class="ph-gear"></i>
-                            <span>More settings</span>
-                        </button>
-                    </div>
-                </section>
+                      
+                    
+                </div>
+            </div>
+            <div class="child add-article">
+                <div class="box container "class="row justify-content-center" >                
+                            <div class="card w-100 h-100">
+                              <div class="card-body">
+                                <h2 class="text-center">Submit Your Article</h2>
+                                <form action="#" method="post">
+                                  <div class="mb-3">
+                                    <label for="title" class="form-label">Article Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                  </div>
+                    
+                                  <div class="mb-3">
+                                    <label for="content" class="form-label">Article Content</label>
+                                    <input type="text" class="form-control" id="content" name="content"required>
+                                  </div>
+                    
+                                  <div class="mb-3">
+                                    <label for="publish_time" class="form-label">Time of Writing</label>
+                                    <input type="datetime-local" class="form-control" id="publish_time" name="publish_time" required>
+                                  </div>
+                    
+                                  <div class="mb-3">
+                                    <label for="category" class="form-label">Article Category</label>
+                                    <select class="form-select" id="category" name="category" required>
+                                      <option value="Technology">Technology</option>
+                                      <option value="Health">Health</option>
+                                      <option value="Business">Business</option>
+                                      <option value="Entertainment">Entertainment</option>
+                                    </select>
+                                  </div>   
+                                  <button type="submit" class="btn btn-primary w-100 mt-3" id="submit">Submit Article</button>
+                                </form>
+                              </div>
+                            </div>
+                      </div>                    
             </div>
         </div>
     </div>
+    <!-- -------------------- -->
+     <!-- Profile -->
+     <div class="main" id="main-profile" style="display: none;">
+        <div class="top-page px-4">
+            <div>
+                <h3>
+                    Profile
+                </h3>
+            </div>
+        </div >
+            <div class="child history" style="width: 600px; height: 700px;">
+                <div class="box p-3 d-flex justify-content-center align-items-center flex-direction-center" id="project-box">
+                    <div class="mb-3">
+                        <p>
+                            <b>Update Profile</b>
+                        </p>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <form class="w-100 h-100">
+                            <div class="field space">
+                                <span class="fa-solid fa-user-pen"></span>
+                
+                                <input type="text" required value=<%= FerstName %> name="FerstName" id="FerstName">
+                             </div>
+                             <div class="field space">
+                                <span class="fa-solid fa-user-tag"></span>
+                                <input type="text" required value=<%= LastName %> name="LastName" id="LastName">
+                             </div>
+                              <div class="field space">
+                                 <span class="fa fa-user"></span>
+                                 <input type="text" required value= <%= UserName %> name="UserName" id="UserName">
+                              </div>
+                              <div class="field space">
+                                <span class="fa-solid fa-phone"></span>
+                                <input type="text" required value=<%= PhoneNumber %> name='PhoneNumber' id="PhoneNumber">
+                             </div>
+                    
+                             <div class="field space">
+                                <span class="fa-solid fa-person-half-dress"></span>
+                                <select name="Gender" id="Gender">
+                                    <option value="male" <%= (Gender === "male") ? 'selected' : '' %>>Male</option>
+                                    <option value="female" <%= (Gender === "female") ? 'selected' : '' %>>Female</option>
+                                    <option value="other" <%= (Gender === "other") ? 'selected' : '' %>>Other</option>
+                                    
+                                </select>
+                                
+                            </div>
+                            
+                              <div class="field d-flex flex-column">
+                                 <button onclick="Update()" class="btn mt-3" style="color: white; background-color: rgb(0, 97, 177);"> Update</button>
+                                 <button onclick="Delete()" class="btn mt-3 "  style="background-color: red; border-color: red; color: white;"> Deleat</button>
+                              </div>
+                           </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+      <!-- ------------------ -->
+    <script src="/javascripts/dashbord.js"></script>
 </body>
 </html>
