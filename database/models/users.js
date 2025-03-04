@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
     FerstName: {
@@ -56,6 +56,10 @@ const UserSchema = new mongoose.Schema({
     Active: {
         type: Boolean,
         default: true
+    },
+    Avatar: {
+        type: String,
+        default: "/images/images.png"
     }
 
 });

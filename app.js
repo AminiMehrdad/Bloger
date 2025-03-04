@@ -14,7 +14,6 @@ const app = express();
 connectDB();
 createAdmin()
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -39,7 +38,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
+  if (!req.cookies.user_sid || !req.session.user) {
     res.clearCookie('user_sid')
   };
   next()

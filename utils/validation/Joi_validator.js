@@ -1,4 +1,4 @@
-const {RegesterSchema, LoginSchema} = require("./schemas");
+const {RegesterSchema, LoginSchema, ArticleSchema} = require("./schemas");
 
 async function valdate_regester(req, res, next) {
   try {
@@ -27,4 +27,21 @@ async function valdate_login(req, res, next) {
   }
 }
 
-module.exports = {valdate_regester, valdate_login};
+async function valdate_article(req, res, next) {
+  try {
+    const parameters = {
+      Title: req.body.Title,
+      Text: req.body.Text
+    }
+    const {error, value} = ArticleSchema.validate(parameters, { abortEarly: false })
+    if (error) {
+      return res.redirect(`/auth/dashbord/?msg=<div id="custom-alert" class="alert alert-danger" role="alert">${error.details[0].message}</div>`)
+    }
+    next()
+  } catch (error) {
+    console.error('Validation failed:', error);
+    return res.status(500).json({ msg: "Internal server error" });
+  }
+}
+
+module.exports = {valdate_regester, valdate_login, valdate_article};

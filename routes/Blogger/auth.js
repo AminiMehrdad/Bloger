@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Users = require("../../database/models/users");
+const Article = require("../../database/models/articles");
 const { valdate_regester, valdate_login } = require("../../utils/validation/Joi_validator");
 const { isUsernameUnique, isPhoneNumberUnique } = require("../../utils/validation/data_base_check")
+const generaltools = require("../../utils/generalTools");
 
 router.get("/login", (req, res) => {
   if(req.session.user && req.cookies.user_sid) {
@@ -20,13 +22,34 @@ router.get("/regester", (req, res) => {
   res.render("regester_page", { msg });
 })
 
-router.get("/dashbord", (req, res) => {
-  if(!req.session.user || !req.cookies.user_sid){
-    return res.redirect("/auth/login");
-  };
-  const {FerstName, LastName, UserName, PhoneNumber, Gender} = req.session.user;
-  console.log(Gender)
-  res.render("Dashbord_page", {FerstName, LastName, UserName, PhoneNumber, Gender});
+router.get("/dashbord", async(req, res) => {
+  try {
+    if(!req.session.user || !req.cookies.user_sid){
+      return res.redirect("/auth/login");
+    };
+    // 5 ferst Article 
+    const articles = await Article.find({creator : req.session.user._id})
+    .sort({NumberSee: -1, Title: 1})
+    .limit(5)
+    // .skip(offset)
+    .populate('creator');
+
+    const total_articles = await Article.find({creator : req.session.user._id});
+    const num_offsets = Math.ceil(total_articles.length/5)
+
+    const totallikes = await generaltools.sumqury(Article, "$Like", req);
+    const totallview = await generaltools.sumqury(Article, "$NumberSee", req);
+    const totalldislike = await generaltools.sumqury(Article, "$Dislike", req);
+
+    console.log(articles.Like);
+    
+    const msg = req.query.msg
+    const {FerstName, LastName, UserName, PhoneNumber, Gender, Rol, Avatar} = req.session.user;
+    res.render("Dashbord_page", {num_offsets, totallikes, totallview, totalldislike, FerstName, LastName, UserName, PhoneNumber, Gender, Rol, Avatar, msg, articles});
+    
+  } catch (error) {
+    res.render("error")
+  }
 })
 
 router.post("/create", valdate_regester, async (req, res) => {
@@ -38,10 +61,6 @@ router.post("/create", valdate_regester, async (req, res) => {
       req.body.Rol = "bloger"
       const NEW_USER = new Users(req.body);
       await NEW_USER.save();
-      console.log(req.session);
-      if (req.session.user.Rol === "admin") {
-        return res.json({msg: "ok"})
-      }
       return res.status(201).redirect("/auth/login")
     }
     if (!isusername.msg || !isphonenumber.msg) {

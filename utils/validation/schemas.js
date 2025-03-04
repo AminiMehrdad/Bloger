@@ -99,5 +99,33 @@ const LoginSchema = Joi.object({
         }),
 })
 
-module.exports = {RegesterSchema, LoginSchema};
+const ArticleSchema = Joi.object({
+    Title: Joi.string()
+    .trim()
+    .empty()
+    .min(3)
+    .max(20)
+    .required()
+    .messages({
+        "string.base": "Title should be type of text",
+        "string.min": "Title must be at least 3 characters long",
+        "string.max": "Title cannot exceed 20 characters",
+        "any.required": "Title is required",
+
+    }),
+
+    Text: Joi.string()
+    .trim()
+    .empty()
+    .min(10)
+    .required()
+    .messages({
+        "string.base": "Text should be type of text",
+        "string.min": "Text must be at least 10 characters long",
+        "any.required": "Text is required",
+
+    }),
+})
+
+module.exports = {RegesterSchema, LoginSchema, ArticleSchema};
 

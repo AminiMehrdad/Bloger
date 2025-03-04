@@ -71,8 +71,6 @@ function Update_user() {
     .then((data)=> {
         
         if(data.msg === "OK"){
-            console.log(data.msg);
-            
             window.location.href = "http://localhost:5000/admin";
         }else {
             

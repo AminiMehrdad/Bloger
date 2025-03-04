@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashbord</title>
-    <link rel="stylesheet" href="https://use.typekit.net/your-kit-id.css">
+    <!-- <link rel="stylesheet" href="https://use.typekit.net/your-kit-id.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/stylesheets/Dashbord.css">
@@ -19,14 +19,16 @@
         <div class="gradiant-border top-page">
            <div class="userinfo d-flex">
             <div class="p-3">
-                <img src="/images/images.png" alt="user image" class="userimge">
+                <img src=<%= Avatar %> alt="user image" class="userimge" id="user_image"  data-bs-toggle="modal" data-bs-target="#userImageModal">
+            </div>
+            <div>
             </div>
             <div class="py-3" style="display: flex;flex-direction: column; justify-content: center;">
                 <p style="font-size: 12px; color: rgb(49, 49, 49);">
-                    FerstName LastName
+                    <%= FerstName %> <%= LastName %>
                 </p>
                 <p style="font-size: 12px;color: gray;">
-                    Rol
+                    <%= Rol %>
                 </p>
             </div>
                 
@@ -79,6 +81,7 @@
         
     </div>
       <!-- Dashbord -->
+      
     <div class="main" id="main-dashbord">
         <div class="top-page px-4">
             <div>
@@ -95,7 +98,7 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <h2>
-                            <b>100</b>
+                            <b><%= totallview %></b>
                         </h2>
                         <p>
                             <b>view</b>
@@ -110,7 +113,7 @@
                             <i class="fas fa-thumbs-up"></i>
                         </div>
                         <h2>
-                            <b>70</b>
+                            <b><%= totallikes %></b>
                             
                         </h2>
                         <p>
@@ -125,7 +128,7 @@
                             <i class="fas fa-eye"></i>
                         </div>
                         <h2>
-                            <b>20</b>
+                            <b><%= totallview - (totallikes + totalldislike) %></b>
                         </h2>
                         <p>
                             <b>No Reaction</b>
@@ -139,7 +142,7 @@
                             <i class="fas fa-thumbs-down"></i>
                         </div>
                         <h2>
-                            <b>10</b>
+                            <b><%= totalldislike %></b>
                         </h2>
                         <p>
                             <b>Dislike</b>
@@ -179,57 +182,50 @@
                         </p>
                     </div>
                     
-                    <table>
-                        <tr>
-                          <th>Name of Project</th>
-                          <th>Total view</th>
-                        <th>Like</th>
-                        <th>Dislike</th>
-                        <th>Precision</th>
-                        </tr>
-                        <tr>
-                          <td>AI in well logs</td>
-                          <td>15</td>
-                          <td>10</td>
-                          <td>3</td>
-                          <td> 
-                            <p id="progressText">
-
-                            </p>
-                            <div class="progress">
-                                <div class="progress-bar" id="progressBar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                        </td>
-                        </tr>
-                        <tr>
-                          <td>Lois</td>
-                          <td>Griffin</td>
-                          <td>$150</td>
-                        </tr>
-                        <tr>
-                          <td>Joe</td>
-                          <td>Swanson</td>
-                          <td>$300</td>
-                        </tr>
-                        <tr>
-                          <td>Cleveland</td>
-                          <td>Brown</td>
-                          <td>$250</td>
-                        </tr>
-                        <tr>
-                            <td>Cleveland</td>
-                            <td>Brown</td>
-                            <td>$250</td>
-                          </tr>
+                    <table id="articletabel">
+                        <thead>
+                            <tr>
+                                <th>Name of Project</th>
+                                <th>Writer</th>
+                                <th>Total view</th>
+                                <th>Like</th>
+                                <th>Dislike</th>
+                                <th>Precision</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div style="display: none;" id="article-len"><%= articles.length %></div>
+                            <% articles.forEach((element, index )=> { %>
+                                <tr>
+                                    <td><%= element.Title %></td>
+                                    <td><%= element.creator.UserName %></td>
+                                    <td><%= element.NumberSee %></td>
+                                    <td><%= element.Like %></td>
+                                    <td><%= element.Dislike %></td>
+                                    <td> 
+                                        <p id=<%= "progressText"+index %>></p>
+                                        <div class="progress">
+                                            <div class="progress-bar" id=<%= "progressBar"+index %> role="progressbar" style=<%= "with:"+String(Math.round((((element.Like+(element.NumberSee+0.001))/(element.NumberSee+0.001))-1)*100))+"%;" %> aria-valuenow=<%= String(Math.round((((element.Like+(element.NumberSee+0.001))/(element.NumberSee+0.001))-1)*100)) %> aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
                       </table>
-                    <div class="d-flex justify-content-center align-items-center w-100 mt-5" >
+                    <div class="d-flex justify-content-center align-items-center w-100 mt-5"  style="position: fixed; top: 90%; left: -6%;">
                         <nav aria-label="next page">
                             <ul class="pagination pagination-sm custom-pagination">
-                              <li class="page-item active" aria-current="page">
-                                <span class="page-link">1</span>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <% for( let index = 1; index <= num_offsets; index++ ) { %>
+                                    <% if (index === 1) { %>
+                                        <li class="page-item active" id="offset_1" onclick="Ofst('offset_1')">
+                                            <a class="page-link" >1</a>
+                                          </li>
+                                    <% } else{ %>
+                                    <li class="page-item" id=<%="offset_"+index%> onclick="Ofst('<%='offset_'+index%>')">
+                                        <a class="page-link" ><%= index %></a>
+                                      </li>
+                                      <% } %>
+                                <% } %>
                             </ul>
                           </nav>
 
@@ -243,25 +239,27 @@
                             <div class="card w-100 h-100">
                               <div class="card-body">
                                 <h2 class="text-center">Submit Your Article</h2>
-                                <form action="#" method="post">
+                                <%- msg %>
+                                <form action="/user/uploadArticle" method="post">
+                                    
                                   <div class="mb-3">
                                     <label for="title" class="form-label">Article Title</label>
-                                    <input type="text" class="form-control" id="title" name="title" required>
+                                    <input type="text" class="form-control" id="title" name="Title" required>
                                   </div>
                     
                                   <div class="mb-3">
                                     <label for="content" class="form-label">Article Content</label>
-                                    <input type="text" class="form-control" id="content" name="content"required>
+                                    <input type="text" class="form-control" id="content" name="Text"required>
                                   </div>
                     
                                   <div class="mb-3">
                                     <label for="publish_time" class="form-label">Time of Writing</label>
-                                    <input type="datetime-local" class="form-control" id="publish_time" name="publish_time" required>
+                                    <input type="datetime-local" class="form-control" id="publish_time" name="CreateAt">
                                   </div>
                     
                                   <div class="mb-3">
                                     <label for="category" class="form-label">Article Category</label>
-                                    <select class="form-select" id="category" name="category" required>
+                                    <select class="form-select" id="category" name="Categury" required>
                                       <option value="Technology">Technology</option>
                                       <option value="Health">Health</option>
                                       <option value="Business">Business</option>
@@ -277,15 +275,17 @@
         </div>
     </div>
     <!-- -------------------- -->
-     <!-- Profile -->
-     <div class="main" id="main-profile" style="display: none;">
+     <!-- Articles -->
+     <div class="main" id="main-article" style="display: none;">
         <div class="top-page px-4">
             <div>
                 <h3>
-                    Profile
+                    Articles
                 </h3>
             </div>
         </div >
+        <div class="parent w-100 h-100 d-flex justify-content-center align-items-center ">
+
             <div class="child history" style="width: 600px; height: 700px;">
                 <div class="box p-3 d-flex justify-content-center align-items-center flex-direction-center" id="project-box">
                     <div class="mb-3">
@@ -321,8 +321,7 @@
                                     <option value="female" <%= (Gender === "female") ? 'selected' : '' %>>Female</option>
                                     <option value="other" <%= (Gender === "other") ? 'selected' : '' %>>Other</option>
                                     
-                                </select>
-                                
+                                </select>                                
                             </div>
                             
                               <div class="field d-flex flex-column">
@@ -330,12 +329,104 @@
                                  <button onclick="Delete()" class="btn mt-3 "  style="background-color: red; border-color: red; color: white;"> Deleat</button>
                               </div>
                            </form>
+                           
                 </div>
             </div>
+        </div>
+            
+        </div>
+    </div>
+
+    <!-- -------------------- -->
+     <!-- Profile -->
+     <div class="main" id="main-profile" style="display: none;">
+        <div class="top-page px-4">
+            <div>
+                <h3>
+                    Profile
+                </h3>
+            </div>
+        </div >
+        <div class="parent w-100 h-100 d-flex justify-content-center align-items-center ">
+
+            <div class="child history" style="width: 600px; height: 700px;">
+                <div class="box p-3 d-flex justify-content-center align-items-center flex-direction-center" id="project-box">
+                    <div class="mb-3">
+                        <p>
+                            <b>Update Profile</b>
+                        </p>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <form class="w-100 h-100">
+                            <div class="field space">
+                                <span class="fa-solid fa-user-pen"></span>
+                
+                                <input type="text" required value=<%= FerstName %> name="FerstName" id="FerstName">
+                             </div>
+                             <div class="field space">
+                                <span class="fa-solid fa-user-tag"></span>
+                                <input type="text" required value=<%= LastName %> name="LastName" id="LastName">
+                             </div>
+                              <div class="field space">
+                                 <span class="fa fa-user"></span>
+                                 <input type="text" required value= <%= UserName %> name="UserName" id="UserName">
+                              </div>
+                              <div class="field space">
+                                <span class="fa-solid fa-phone"></span>
+                                <input type="text" required value=<%= PhoneNumber %> name='PhoneNumber' id="PhoneNumber">
+                             </div>
+                    
+                             <div class="field space">
+                                <span class="fa-solid fa-person-half-dress"></span>
+                                <select name="Gender" id="Gender">
+                                    <option value="male" <%= (Gender === "male") ? 'selected' : '' %>>Male</option>
+                                    <option value="female" <%= (Gender === "female") ? 'selected' : '' %>>Female</option>
+                                    <option value="other" <%= (Gender === "other") ? 'selected' : '' %>>Other</option>
+                                    
+                                </select>                                
+                            </div>
+                            
+                              <div class="field d-flex flex-column">
+                                 <button onclick="Update()" class="btn mt-3" style="color: white; background-color: rgb(0, 97, 177);"> Update</button>
+                                 <button onclick="Delete()" class="btn mt-3 "  style="background-color: red; border-color: red; color: white;"> Deleat</button>
+                              </div>
+                           </form>
+                           
+                </div>
+            </div>
+        </div>
             
         </div>
     </div>
       <!-- ------------------ -->
+
+      <!-- image modal -->
+       <!-- Modal -->
+
+    <div class="modal fade" id="userImageModal" tabindex="-1" aria-labelledby="userImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="userImageModalLabel">User Image</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body text-center">
+              <img src=<%=Avatar%> alt="User Image" class="img-fluid">
+            </div>
+            <form action="/user/uplodavatar" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatar"  class="p-1"/>
+                <input type="submit" value="Get me the stats!" class="btn btn-default">
+            </form>
+            <!-- Modal Footer (Optional) -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              
+            </div>
+        </div>
+    </div>
     <script src="/javascripts/dashbord.js"></script>
 </body>
 </html>

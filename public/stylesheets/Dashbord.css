@@ -72,6 +72,10 @@ p {
 		height: 50px;
 		border-radius: 100%;
 	}
+	.userimge:hover {
+		cursor: pointer;
+		opacity: 0.8;
+	}
   
   .main {
 	height: 100%;
@@ -252,5 +256,8 @@ p {
   }
   button:hover {
 	opacity: 0.8;
+	cursor: pointer;
+  }
+  .page-item:hover {
 	cursor: pointer;
   }

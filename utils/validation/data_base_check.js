@@ -1,4 +1,5 @@
 const User = require("../../database/models/users");
+const Article = require("../../database/models/articles");
 const validator = require("validator");
 
 
@@ -32,7 +33,37 @@ async function isPhoneNumberUnique(phoneNumber) {
         throw error; // Re-throw the error for the caller to handle
     }
 }
+
+async function isTitleUnique(titele) {
+    try { 
+        console.log(titele)
+        const user = await Article.findOne({ Title:titele }).exec();
+        if(!user) {
+            return {msg: "No User Find"}
+        }
+        return user;
+    } catch (error) {
+        console.error("Error checking Title uniqueness:", error);
+        throw error; // Re-throw the error for the caller to handle
+    }
+}
+
+async function isTextUnique(Text) {
+    try {
+        const user = await Article.findOne({ Text: Text }).exec();
+        if(!user) {
+            return {msg: "No User Find"}
+        }
+        return user;
+    } catch (error) {
+        console.error("Error checking Text uniqueness:", error);
+        throw error; // Re-throw the error for the caller to handle
+    }
+}
+
 module.exports = {
     isUsernameUnique,
-    isPhoneNumberUnique
+    isPhoneNumberUnique,
+    isTitleUnique,
+    isTextUnique
 };
